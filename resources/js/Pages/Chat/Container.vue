@@ -39,22 +39,22 @@ export default {
         AppLayout,
     },
     data() {
-      return {
-          chatRooms: [],
-          currentRoom: [],
-          messages: [],
-      }
+        return {
+            chatRooms: [],
+            currentRoom: [],
+            messages: [],
+        }
     },
     created() {
         this.getRooms();
     },
     watch: {
-      currentRoom(val, oldVal) {
-          if (oldVal.id) {
-              this.disconnect(oldVal);
-          }
-          this.connect();
-      }
+        currentRoom(val, oldVal) {
+            if (oldVal.id) {
+                this.disconnect(oldVal);
+            }
+            this.connect();
+        }
     },
     methods: {
         connect() {
@@ -62,15 +62,10 @@ export default {
                 let vm = this;
                 this.getMessages();
 
-                // window.Echo.private("chat." + this.currentRoom.id)
-                // .listen('.message.new', e => {
-                //     vm.getMessages();
-                // });
-
                 window.Echo.private("chat." + this.currentRoom.id)
-                .listen('NewChatMessage', e => {
-                    vm.getMessages();
-                })
+                    .listen('.message.new', e => {
+                        vm.getMessages();
+                    });
             }
         },
         disconnect(room) {
@@ -89,12 +84,12 @@ export default {
         },
         getMessages() {
             axios.get(`/chat/room/${this.currentRoom.id}/messages`)
-            .then(response => {
-                this.messages = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            })
+                .then(response => {
+                    this.messages = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         }
     }
 }

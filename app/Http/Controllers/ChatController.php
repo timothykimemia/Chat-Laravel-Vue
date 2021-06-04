@@ -6,15 +6,21 @@ use App\Events\NewChatMessage;
 use App\Models\ChatMessage;
 use App\Models\ChatRoom;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ChatController extends Controller
 {
-    public function rooms(Request $request)
+    public function index()
+    {
+        return Inertia::render('Chat/Container');
+    }
+
+    public function rooms()
     {
         return ChatRoom::all();
     }
 
-    public function messages(Request $request, $roomId)
+    public function messages($roomId)
     {
         return ChatMessage::where('chat_room_id', $roomId)
             ->with('user')
