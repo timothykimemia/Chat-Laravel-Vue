@@ -12,7 +12,8 @@ class ChatController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Chat/Container');
+        return Inertia::render('Chat/Index');
+
     }
 
     public function rooms()
